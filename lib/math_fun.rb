@@ -13,8 +13,17 @@ module MathFun
     iteration - 1
   end
 
+  def y_loop_fix(iteration, base, height, revolution)
+    (arrI iteration - base) - mod_postN(iteration, height, revolution)
+  end
+
+  def x_loop_fix(iteration, base, height, revolution)
+    base + mod_postN(iteration, height, revolution)
+  end
+
   # checks if the current values are worth
-  def evaluation
+  def evaluation(iteration, base, height, revolution)
+    y_diag_fix(iteration, base, height, revolution) >= 0 && x_diag_fix(iteration, base, height, revolution) < 7
   end
 end
 
@@ -33,4 +42,4 @@ end
 # 2 -> 2,0 : 1,1 : 0,2
 # 3 -> 3,0 : 2,1 : 1,2 : 0,3
 # ...
-# i -> Series from 0 to i { f(k(i) - f(j(i)) ) , f(j(i)) }
+# i -> Series from 0 to i: { k(i) - j(i) , j(i) }
