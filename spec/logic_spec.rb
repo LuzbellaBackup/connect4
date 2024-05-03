@@ -84,7 +84,7 @@ describe Logic do
 
     describe '#diagonal_check' do
       context 'When 4 white equal discs are connected' do
-        xit 'return true if 4 of one color are together in the same diagonal' do
+        it 'return true if 4 of one color are together in the same diagonal' do
           win_condition = logic.diagonal_check(MockValues::WIN_CONDITIONS[:white_valid])
           expect(win_condition).to be(true)
         end
