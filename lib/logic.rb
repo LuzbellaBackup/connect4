@@ -2,25 +2,6 @@
 
 require './lib/math_fun'
 
-tst = [
-  ['b', 'a', 'a', 'a', nil, nil],
-  ['a', nil, 'a', nil, nil, nil],
-  ['a', 'a', nil, nil, nil, nil],
-  ['b', nil, nil, nil, nil, nil],
-  ['a', 'a', nil, nil, nil, nil],
-  ['a', nil, 'a', nil, nil, nil],
-  ['a', nil, nil, 'a', nil, nil]
-]
-valid = [
-  ['a', 'a', 'a', 'a', nil, nil],
-  ['a', nil, 'a', nil, nil, nil],
-  ['a', 'a', nil, nil, nil, nil],
-  ['a', nil, nil, nil, nil, nil],
-  ['a', 'a', nil, nil, nil, nil],
-  ['a', nil, 'a', nil, nil, nil],
-  ['a', nil, nil, 'a', nil, nil]
-]
-
 # Game Logic
 class Logic
   include MathFun
@@ -55,19 +36,6 @@ class Logic
     @iteration = 1
   end
 
-  def x_eval(iteration, x_value, column, columns_revolutions)
-    (arrI iteration - x_value) - mod_postN(iteration, column, columns_revolutions) >= 0
-  end
-
-  def y_eval(iteration, x_value, column, columns_revolutions)
-    ((x_value + mod_postN(iteration, column, columns_revolutions) < 7))
-  end
-
-  def limit?(iteration, x_value, column, columns_revolutions)
-    x_eval(iteration, x_value, column, columns_revolutions) && \
-      y_eval(iteration, x_value, column, columns_revolutions) # multiline conditional broke appart
-  end
-
   def row_check(matrix, symbol = 'a')
     reset
     @columns.times do |column|
@@ -93,10 +61,7 @@ class Logic
       @columns.times do |column|
         break if win
 
-        # p row[column]
-
         (row[column] == temporal) && !row[column].nil? ? counter(true) : counter(false)
-        # p @count
         temporal = row[column] # this stores the last value
       end
     end
@@ -105,26 +70,62 @@ class Logic
 
   def diagonal_check(matrix, symbol = 'a')
     loop do
+      break if win
+
       @columns_revolutions += 1 if @iteration == 2 * @columns
       x_value = 0
+      temporal = nil
       while x_value != @iteration
+        break if win
+
         current_x = x_value + mod_postN(@iteration, @columns, @columns_revolutions)
         current_y = (arrI @iteration - x_value) - mod_postN(@iteration, @columns, @columns_revolutions)
         eval = limit?(@iteration, x_value, @columns, @columns_revolutions)
-        p matrix [current_x][current_y] if eval
+
+        if eval
+          value = matrix [current_x][current_y]
+          (value == temporal) && !value.nil? ? counter(true) : counter(false)
+          temporal = value
+        end
         x_value += 1
       end
       @iteration += 1
       break if @iteration > 12
     end
+    win
   end
 
   def counter_diagonal_check(matrix, symbol = 'a')
+    loop do
+      break if win
+
+      @columns_revolutions += 1 if @iteration == 2 * @columns
+      x_value = 0
+      temporal = nil
+      while x_value != @iteration
+        break if win
+
+        current_x = x_value + mod_postN(@iteration, @columns, @columns_revolutions)
+        current_y = (arrI @iteration - x_value) - mod_postN(@iteration, @columns, @columns_revolutions)
+        eval = limit?(@iteration, x_value, @columns, @columns_revolutions, true)
+
+        if eval
+          value = matrix [-(current_x + 1)][current_y]
+          (value == temporal) && !value.nil? ? counter(true) : counter(false)
+          temporal = value
+        end
+        x_value += 1
+      end
+      @iteration += 1
+      break if @iteration > 12
+    end
+    win
+  end
+
+  def call_winconditions(matrix, symbol = 'a')
+    row_check(matrix, symbol = 'a')
+    columns_check(matrix, symbol = 'a')
+    diagonal_check(matrix, symbol = 'a')
+    counter_diagonal_check(matrix, symbol = 'a')
   end
 end
-
-prueba = Logic.new
-
-p prueba.columns_check(valid, 'a')
-
-p prueba.columns_check(tst, 'a')

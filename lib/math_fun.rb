@@ -21,7 +21,24 @@ module MathFun
     base + mod_postN(iteration, height, revolution)
   end
 
-  # checks if the current values are worth
+  def x_eval(iteration, x_value, column, columns_revolutions, is_counter_diagonal = false)
+    if is_counter_diagonal
+      (arrI iteration - x_value) - mod_postN(iteration, column, columns_revolutions) < 6
+    else
+      (arrI iteration - x_value) - mod_postN(iteration, column, columns_revolutions) >= 0
+    end
+  end
+
+  def y_eval(iteration, x_value, column, columns_revolutions)
+    ((x_value + mod_postN(iteration, column, columns_revolutions) < 7))
+  end
+
+  def limit?(iteration, x_value, column, columns_revolutions, is_counter = false)
+    x_eval(iteration, x_value, column, columns_revolutions, is_counter) && \
+      y_eval(iteration, x_value, column, columns_revolutions) # multiline conditional broke appart
+  end
+
+  # checks if the current values are worth something /// DEPRECATED
   def evaluation(iteration, base, height, revolution)
     y_diag_fix(iteration, base, height, revolution) >= 0 && x_diag_fix(iteration, base, height, revolution) < 7
   end

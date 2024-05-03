@@ -9,6 +9,7 @@ RSpec.shared_context 'values' do
   let(:black_w) { MockValues::WIN_CONDITIONS[:black_valid] }
   let(:black_f) { MockValues::WIN_CONDITIONS[:black_invalid] }
   let(:empty) { MockValues::EXTREME_CASES[:empty] }
+  let(:locked) { MockValues::EXTREME_CASES[:complete] }
 end
 
 describe Logic do
@@ -85,31 +86,31 @@ describe Logic do
     describe '#diagonal_check' do
       context 'When 4 white equal discs are connected' do
         it 'return true if 4 of one color are together in the same diagonal' do
-          win_condition = logic.diagonal_check(MockValues::WIN_CONDITIONS[:white_valid])
+          win_condition = logic.diagonal_check(white_w, 'a')
           expect(win_condition).to be(true)
         end
       end
       context 'When 4 white iniqual discs are connected' do
-        xit 'return false if 4 of one color are not together in the same diagonal' do
-          win_condition = logic.diagonal_check(MockValues::WIN_CONDITIONS[:white_invalid])
+        it 'return false if 4 of one color are not together in the same diagonal' do
+          win_condition = logic.diagonal_check(white_f, 'a')
           expect(win_condition).to be(false)
         end
       end
       context 'When 4 black equal discs are connected' do
-        xit 'return true if 4 of one color are together in the same diagonal' do
-          win_condition = logic.diagonal_check(MockValues::WIN_CONDITIONS[:black_valid])
+        it 'return true if 4 of one color are together in the same diagonal' do
+          win_condition = logic.diagonal_check(black_w, 'b')
           expect(win_condition).to be(true)
         end
       end
       context 'When 4 black iniqual discs are connected' do
-        xit 'return false if 4 of one color are not together in the same diagonal' do
-          win_condition = logic.diagonal_check(MockValues::WIN_CONDITIONS[:black_invalid])
+        it 'return false if 4 of one color are not together in the same diagonal' do
+          win_condition = logic.diagonal_check(black_f, 'b')
           expect(win_condition).to be(false)
         end
       end
       context 'When grid is empty' do
-        xit 'return false' do
-          win_condition = logic.diagonal_check(MockValues::EXTREME_CASES[:empty])
+        it 'return false' do
+          win_condition = logic.diagonal_check(empty)
           expect(win_condition).to be(false)
         end
       end
@@ -117,35 +118,38 @@ describe Logic do
 
     describe '#counter_diagonal_check' do
       context 'When 4 white equal discs are connected' do
-        xit 'return true if 4 of one color are together in the same row counter diagonal' do
-          win_condition = logic.counter_diagonal_check(MockValues::WIN_CONDITIONS[:white_valid])
+        it 'return true if 4 of one color are together in the same row counter diagonal' do
+          win_condition = logic.counter_diagonal_check(white_w, 'a')
           expect(win_condition).to be(true)
         end
       end
       context 'When 4 white iniqual discs are connected' do
-        xit 'return false if 4 of one color are not together in the same row counter diagonal' do
-          win_condition = logic.diagonal_check(MockValues::WIN_CONDITIONS[:white_invalid])
+        it 'return false if 4 of one color are not together in the same row counter diagonal' do
+          win_condition = logic.diagonal_check(white_f, 'a')
           expect(win_condition).to be(false)
         end
       end
       context 'When 4 black equal discs are connected' do
-        xit 'return true if 4 of one color are together in the same row counter diagonal' do
-          win_condition = logic.diagonal_check(MockValues::WIN_CONDITIONS[:black_valid])
+        it 'return true if 4 of one color are together in the same row counter diagonal' do
+          win_condition = logic.diagonal_check(black_w, 'b')
           expect(win_condition).to be(true)
         end
       end
       context 'When 4 black iniqual discs are connected' do
-        xit 'return false if 4 of one color are not together in the same row counter diagonal' do
-          win_condition = logic.diagonal_check(MockValues::WIN_CONDITIONS[:black_invalid])
+        it 'return false if 4 of one color are not together in the same row counter diagonal' do
+          win_condition = logic.diagonal_check(black_f, 'b')
           expect(win_condition).to be(false)
         end
       end
       context 'When grid is empty' do
-        xit 'return false' do
-          win_condition = logic.diagonal_check(MockValues::EXTREME_CASES[:empty])
+        it 'return false' do
+          win_condition = logic.diagonal_check(empty)
           expect(win_condition).to be(false)
         end
       end
+    end
+
+    describe '#call_wincondtions' do
     end
   end
 end
