@@ -25,6 +25,8 @@ class Grid
     end
   end
 
+  # i determinates y values from infinite to 0. starting at the upper value.
+  # each jump is base 2  == (0,1) => 1 || (2,3) => 2
   def symbol(matrix, i, j)
     temp = matrix[i / 2][-(j / 2) + 5]
     return temp unless temp.nil?

@@ -4,17 +4,15 @@ require './lib/grid'
 require './spec/examples/example'
 
 RSpec.shared_context 'values' do
-  let(:white_w) { MockValues::WIN_CONDITIONS[:white_valid] }
-  let(:white_f) { MockValues::WIN_CONDITIONS[:white_invalid] }
-  let(:black_w) { MockValues::WIN_CONDITIONS[:black_valid] }
-  let(:black_f) { MockValues::WIN_CONDITIONS[:black_invalid] }
+  let(:case_a) { MockValues::EXTREME_CASES[:default] }
+  let(:case_b) { MockValues::EXTREME_CASES[:default2] }
   let(:empty) { MockValues::EXTREME_CASES[:empty] }
   let(:locked) { MockValues::EXTREME_CASES[:complete] }
 end
 
 describe Grid do
   include MockValues
-  # include_context 'values'
+  include_context 'values'
   subject(:grid) { described_class.new }
   context 'Grid Functions + Grid UI' do
     describe '#rel_pos' do
@@ -81,26 +79,47 @@ describe Grid do
     end
     describe '#symbol' do
       context 'when limit cases ' do
-        xit 'default case' do
+        it 'default case' do
+          expected = grid.symbol(case_a, 0, 6)
+          expect(expected).to be('b')
         end
-        xit 'lower left limit' do
+        it 'lower left limit' do
+          expected = grid.symbol(case_a, 0, 11)
+          expect(expected).to be('a')
         end
-        xit 'lower right limit' do
+        it 'lower right limit' do
+          expected = grid.symbol(case_a, 12, 11)
+          expect(expected).to be('b')
         end
-        xit 'upper left limit' do
+        it 'upper left limit' do
+          expected = grid.symbol(case_a, 0, 0)
+          expect(expected).to be('a')
         end
-        xit 'upper right limit' do
+        it 'upper right limit' do
+          expected = grid.symbol(case_a, 12, 0)
+          expect(expected).to be(' ')
         end
       end
-      xit 'if empty return " "' do
+      it 'if empty return " "' do
+        expected = grid.symbol(case_a, 12, 6)
+        expect(expected).to be(' ')
       end
     end
     describe '#constructor' do
-      xit 'default "A"' do
+      it 'default "A"' do
+        expected = grid.constructor(case_a, 15)
+        expect(expected).to be
+        '┌───┬───┬───┬───┬───┬───┬───┐\n│ a │   │   │   │   │   │   │\n├───┼───┼───┼───┼───┼───┼───┤\n│ b │   │   │   │   │   │   │\n├───┼───┼───┼───┼───┼───┼───┤\n│ a │   │   │   │   │   │   │\n├───┼───┼───┼───┼───┼───┼───┤\n│ b │   │   │   │   │   │   │\n├───┼───┼───┼───┼───┼───┼───┤\n│ a │ b │ a │ b │ a │ b │   │\n├───┼───┼───┼───┼───┼───┼───┤\n│ a │ b │ a │ b │ a │ b │ b │\n└───┴───┴───┴───┴───┴───┴───┘\n'
       end
-      xit 'default "B"' do
+      it 'default "B"' do
+        expected = grid.constructor(case_a, 15)
+        expect(expected).to be
+        '┌───┬───┬───┬───┬───┬───┬───┐\n│   │   │   │   │ a │   │   │\n├───┼───┼───┼───┼───┼───┼───┤\n│   │   │   │   │ b │   │   │\n├───┼───┼───┼───┼───┼───┼───┤\n│   │   │   │   │ a │   │   │\n├───┼───┼───┼───┼───┼───┼───┤\n│   │   │   │   │ b │   │   │\n├───┼───┼───┼───┼───┼───┼───┤\n│ b │ a │ b │ a │ a │ b │   │\n├───┼───┼───┼───┼───┼───┼───┤\n│ b │ a │ b │ a │ a │ b │ a │\n└───┴───┴───┴───┴───┴───┴───┘\n'
       end
-      xit 'expect empty grid' do
+      it 'expect empty grid' do
+        expected = grid.constructor(case_a, 15)
+        expect(expected).to be
+        '┌───┬───┬───┬───┬───┬───┬───┐\n│   │   │   │   │   │   │   │\n├───┼───┼───┼───┼───┼───┼───┤\n│   │   │   │   │   │   │   │\n├───┼───┼───┼───┼───┼───┼───┤\n│   │   │   │   │   │   │   │\n├───┼───┼───┼───┼───┼───┼───┤\n│   │   │   │   │   │   │   │\n├───┼───┼───┼───┼───┼───┼───┤\n│   │   │   │   │   │   │   │\n├───┼───┼───┼───┼───┼───┼───┤\n│   │   │   │   │   │   │   │\n└───┴───┴───┴───┴───┴───┴───┘\n'
       end
     end
   end
