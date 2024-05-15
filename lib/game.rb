@@ -53,10 +53,16 @@ class Game
     puts "└───────────────────────────┘\n #{current.name_tag}'s turn || pick from 1-7"
   end
 
+  def user_input
+    log
+    gets.chomp.to_i
+  end
+
   def main_loop
     turn = 0
     loop do
       print_ui(@players[turn])
+
       wc = @logic.call_winconditions(@matrix)
       turn = 1 - turn
 
