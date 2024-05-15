@@ -8,6 +8,7 @@ class Game
     @matrix = default_matrix
     @players = []
     @grid = nil
+    @logic = nil
   end
 
   def load_libs
@@ -17,14 +18,14 @@ class Game
   end
 
   def utilities
-    2.times { |i| @players.push(Player.new(get_user, i)) }
+    2.times { |i| @players.push(Player.new(get_user(i), i)) }
     @grid = Grid.new
+    @logic = Logic.new
   end
 
   def default_matrix
     [
-      # [nil, nil, nil, nil, nil, nil],
-      %w[a b a b a b],
+      [nil, nil, nil, nil, nil, nil],
       [nil, nil, nil, nil, nil, nil],
       [nil, nil, nil, nil, nil, nil],
       [nil, nil, nil, nil, nil, nil],
@@ -40,24 +41,39 @@ class Game
     gets
   end
 
-  def get_user
-    puts "\tEnter your name: ...\n"
-    gets
+  def get_user(number)
+    puts "\tPlayer #{number + 1} Enter your name: ...\n"
+    gets.chomp
+  end
+
+  def print_ui(current)
+    system('clear')
+    puts "┌───┬───┬───┬───┬───┬───┬───┐\n└─1─┴─2─┴─3─┴─4─┴─5─┴─6─┴─7─┘"
+    puts @grid.constructor(matrix)
+    puts "└───────────────────────────┘\n #{current.name_tag}'s turn || pick from 1-7"
   end
 
   def main_loop
+    turn = 0
+    loop do
+      print_ui(@players[turn])
+      wc = @logic.call_winconditions(@matrix)
+      turn = 1 - turn
+
+      break if true # wc
+    end
   end
 
   def main
     load_libs
     introduction
     utilities
-    puts @grid.constructor(matrix)
+    main_loop
   end
 end
 
 gam = Game.new
-# gam.main
+gam.main
 
-p gam.matrix[0].find_index(nil)
+# p gam.matrix[0].find_index(nil)
 ## Mousekiherramienta misteriosa
