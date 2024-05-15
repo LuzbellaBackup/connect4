@@ -34,7 +34,7 @@ class Grid
     ' '
   end
 
-  def constructor(matrix, row) # Funcion del orto
+  def constructor(matrix, row = 15) # Funcion del orto
     array = []
     (matrix[0].length * 2 + 1).times do |column|
       rel_pos(6, column)

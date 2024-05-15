@@ -35,6 +35,17 @@ class Player
     JSON.parse(file)
   end
 
+  def update_stats(is_win)
+    @stats[:games_played] += 1
+    is_win ? @stats[:won] += 1 : @stats[:lost] += 1
+    @stats[:winrate] = (@stats[:games_played] / @stats[:won]) * 100
+  end
+
+  def update(is_win)
+    update_stats
+    load_to_json
+  end
+
   def json_parser
     to_parse = @stats
     opts = {
