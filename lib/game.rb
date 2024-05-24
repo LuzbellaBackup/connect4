@@ -19,12 +19,14 @@ class Game
 
   def utilities
     2.times { |i| @players.push(Player.new(get_user(i), i)) }
+    @players.each { |player| player.load_to_json }
     @grid = Grid.new
     @logic = Logic.new
   end
 
   def default_matrix
     [
+      # %w[a a a a a a],
       [nil, nil, nil, nil, nil, nil],
       [nil, nil, nil, nil, nil, nil],
       [nil, nil, nil, nil, nil, nil],
@@ -53,33 +55,50 @@ class Game
     puts "└───────────────────────────┘\n #{current.name_tag}'s turn || pick from 1-7"
   end
 
-  def user_input
-    log
-    gets.chomp.to_i
+  def input_loop
+    puts '// Pick a number from 1 to 8 :3'
+    input = nil
+    loop do
+      input = gets.chomp[/\b[1-7]\b/]
+      conditional = @matrix[input.to_i - 1].find_index(nil)
+      break if !input.nil? && !conditional.nil?
+
+      puts "\nBAD INPUT. please, pick a number from 1 to 8 that it's column aint full."
+    end
+    input.to_i - 1
   end
 
-  def main_loop
+  def main_loop # rubocop:disable Metrics/MethodLength
     turn = 0
     loop do
       print_ui(@players[turn])
-
+      user_input = input_loop
+      height = @matrix[user_input].find_index(nil)
+      @matrix[user_input][height] = @players[turn].symbol
       wc = @logic.call_winconditions(@matrix)
-      turn = 1 - turn
+      turn = 1 - turn # Alternator
 
-      break if true # wc
+      break if wc # wc
     end
+    p @players[turn].stats
+    @players[turn].update(true)
+    @players[1 - turn].update(false)
+    turn
   end
 
   def main
     load_libs
     introduction
     utilities
-    main_loop
+    turn = main_loop
+    print_ui(@players[turn])
+    puts "#{@players[turn].name_tag} has won"
   end
 end
 
 gam = Game.new
-gam.main
 
-# p gam.matrix[0].find_index(nil)
+p gam.matrix[0].find_index(nil)
+# p gam.input_loop.is_a?(Integer)
+gam.main
 ## Mousekiherramienta misteriosa

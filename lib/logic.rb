@@ -123,9 +123,10 @@ class Logic
   end
 
   def call_winconditions(matrix, symbol = 'a')
-    row_check(matrix, symbol = 'a')
-    columns_check(matrix, symbol = 'a')
-    diagonal_check(matrix, symbol = 'a')
-    counter_diagonal_check(matrix, symbol = 'a')
+    row = row_check(matrix, symbol = 'a')
+    col = columns_check(matrix, symbol = 'a')
+    diag = diagonal_check(matrix, symbol = 'a')
+    counter_diag = counter_diagonal_check(matrix, symbol = 'a')
+    row || col || diag || counter_diag
   end
 end

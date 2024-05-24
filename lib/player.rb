@@ -19,7 +19,7 @@ class Player
 
   # FileUtils.mkdir_p 'data/lang' unless Dir.exist? 'data/lang'
   def default_stats
-    { 'games_played' => 0, 'won' => 0, 'lost' => 0, 'winrate' => 0 }
+    { games_played: 0, won: 0, lost: 0, winrate: 0 }
   end
 
   def load_to_json
@@ -36,13 +36,13 @@ class Player
   end
 
   def update_stats(is_win)
-    @stats[:games_played] += 1
-    is_win ? @stats[:won] += 1 : @stats[:lost] += 1
-    @stats[:winrate] = (@stats[:games_played] / @stats[:won]) * 100
+    @stats['games_played'] += 1
+    is_win ? @stats['won'] += 1 : @stats['lost'] += 1
+    @stats['winrate'] = (@stats['won'] / @stats['games_played']) * 100
   end
 
   def update(is_win)
-    update_stats
+    update_stats(is_win)
     load_to_json
   end
 
