@@ -22,6 +22,26 @@ module MockValues
       %w[a b a b a b],
       %w[a b a b a b],
       %w[a b a b a b]
+    ],
+    default:
+    [
+      %w[a a b a b a],
+      ['b', 'b', nil, nil, nil, nil],
+      ['a', 'a', nil, nil, nil, nil],
+      ['b', 'b', nil, nil, nil, nil],
+      ['a', 'a', nil, nil, nil, nil],
+      ['b', 'b', nil, nil, nil, nil],
+      ['b', nil, nil, nil, nil, nil]
+    ],
+    default2:
+    [
+      ['b', 'b', nil, nil, nil, nil],
+      ['a', 'a', nil, nil, nil, nil],
+      ['b', 'b', nil, nil, nil, nil],
+      ['a', 'a', nil, nil, nil, nil],
+      %w[a a b a b a],
+      ['b', 'b', nil, nil, nil, nil],
+      ['a', nil, nil, nil, nil, nil]
     ]
   }.freeze
 
