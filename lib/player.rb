@@ -19,7 +19,7 @@ class Player
 
   # FileUtils.mkdir_p 'data/lang' unless Dir.exist? 'data/lang'
   def default_stats
-    { games_played: 0, won: 0, lost: 0, winrate: 0 }
+    Hash['games_played', 0, 'won', 0, 'lost', 0, 'winrate', 0]
   end
 
   def load_to_json
@@ -32,7 +32,7 @@ class Player
   def read_from_json
     filename = "#{@name_tag}.json"
     file = File.read("data/user/#{filename}")
-    JSON.parse(file)
+    p JSON.parse(file)
   end
 
   def update_stats(is_win)

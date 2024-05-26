@@ -76,11 +76,10 @@ class Game
       height = @matrix[user_input].find_index(nil)
       @matrix[user_input][height] = @players[turn].symbol
       wc = @logic.call_winconditions(@matrix)
-      turn = 1 - turn # Alternator
-
       break if wc # wc
+
+      turn = 1 - turn # Alternator
     end
-    p @players[turn].stats
     @players[turn].update(true)
     @players[1 - turn].update(false)
     turn
@@ -95,10 +94,3 @@ class Game
     puts "#{@players[turn].name_tag} has won"
   end
 end
-
-gam = Game.new
-
-p gam.matrix[0].find_index(nil)
-# p gam.input_loop.is_a?(Integer)
-gam.main
-## Mousekiherramienta misteriosa

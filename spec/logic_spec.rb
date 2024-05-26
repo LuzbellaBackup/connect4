@@ -148,8 +148,5 @@ describe Logic do
         end
       end
     end
-
-    describe '#call_wincondtions' do
-    end
   end
 end

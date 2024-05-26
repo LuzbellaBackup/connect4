@@ -7,6 +7,7 @@ class Logic
   include MathFun
   attr_reader :rows, :columns, :iteration, :row_revolutions, :columns_revolutions, :count
 
+  # Initializes the Logic object with default settings for a 6x5 grid.
   def initialize
     @rows = 7
     @columns = 6
@@ -16,25 +17,31 @@ class Logic
     @count = 0
   end
 
+  # Check if the win condition (by default 3 due to being connect 4 [0,1,2,3])
   def win
     @count == 3
   end
 
+  # Increment win counter if condition is true
   def counter(condition)
     return reset unless condition
 
     @count += 1
   end
 
+  # reset the counter to 0
   def reset
     @count = 0
   end
 
+  # reset revolutions
   def reset_revolutions
     @row_revolutions = 0
     @columns_revolutions = 0
     @iteration = 1
   end
+
+  # Game macro logic starts on here
 
   def row_check(matrix, symbol = 'a')
     reset
@@ -122,6 +129,7 @@ class Logic
     win
   end
 
+  # Win condition
   def call_winconditions(matrix, symbol = 'a')
     row = row_check(matrix, symbol = 'a')
     col = columns_check(matrix, symbol = 'a')
