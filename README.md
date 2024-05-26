@@ -4,13 +4,13 @@
 // This was a considerable journey and unexpectedly harder that what i expect at first glance. 
 
 <p>The diagonal algorithm was developed externally and therefore its testing isnt tied to the official TDD expected in this project. everything else can be overviewed in the 
-documentation and its related tests.<p>
+documentation and its related tests.</p>
 
 
 
 ## DOCUMENTATION
 
-    BASIS. this is a console-based connect four application, in order to launch it just execute Main.rb through terminal.
+    <p>BASIS. this is a console-based connect four application, in order to launch it just execute Main.rb through terminal.</p>
 
 ## MODULES
 
